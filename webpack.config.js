@@ -1,6 +1,22 @@
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
+
+const buildVersionFile = path.resolve(__dirname, 'build-version.txt');
+
+// Liest die Build-Version aus der Datei oder liefert einen Fallback.
+const readBuildVersion = () => {
+    try {
+        const raw = fs.readFileSync(buildVersionFile, 'utf8').trim();
+        return raw || '0';
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            return '0';
+        }
+        throw error;
+    }
+};
 
 /** @type {import('webpack').ConfigurationFactory} */
 module.exports = (env, argv) => {
@@ -67,6 +83,7 @@ module.exports = (env, argv) => {
         plugins: [
             new HtmlWebpackPlugin({
                 template: 'public/index.html',
+                buildVersion: readBuildVersion(),
                 minify: isProd && {collapseWhitespace: true, removeComments: true},
             }),
         ],

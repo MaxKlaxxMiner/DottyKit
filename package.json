@@ -1,12 +1,12 @@
 {
-  "name": "DottyKit",
-  "version": "0.0.1",
+  "name": "dottykit",
+  "version": "0.0",
   "private": true,
   "description": "",
   "license": "MIT",
   "scripts": {
     "dev": "webpack serve --config webpack.config.js --mode development",
-    "build": "webpack --config webpack.config.js --mode production",
+    "build": "node scripts/bumpBuildVersion.js && webpack --config webpack.config.js --mode production",
     "typecheck": "tsc --noEmit"
   },
   "engines": {
