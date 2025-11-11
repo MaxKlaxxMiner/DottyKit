@@ -1,6 +1,5 @@
-import {Sprite, Sprites} from "@/dotty/Sprites";
-
-const picMode = true;
+import {Sprites} from "@/dotty/Sprites";
+import {Easing} from "@/dotty/Easing";
 
 export class Dotty {
     private readonly canvas: HTMLCanvasElement;
@@ -27,25 +26,28 @@ export class Dotty {
 
     }
 
-    pic?: Sprite;
-
     // --- Update per Frame ---
     private render() {
         const {width, height} = this.canvas;
+        const tim = performance.now();
         const ctx = this.ctx;
         ctx.clearRect(0, 0, width, height);
-        ctx.save();
 
-        if (picMode) {
-            if (!this.pic) this.pic = Sprites.dottyKitSplash;
-            const sp = this.pic;
-            const scaleW = width / (sp.w + 2);
-            const scaleH = height / (sp.h * 2 + 2);
+        // --- Splash zeichnen ---
+        if (tim < 2000) {
+            ctx.save();
+            ctx.globalAlpha = Easing.easeInOutCubic(1 - (tim-250) / 1750);
+            ctx.fillStyle = '#20142c';
+            ctx.fillRect(0, 0, width, height);
+            const sp = Sprites.dottyKitSplash;
+            const scaleW = width / (sp.w + 8);
+            const scaleH = height / (sp.h * 2 + 8);
             const scale = Math.min(scaleW, scaleH);
+            ctx.translate(width / 2, height / 2);
             ctx.scale(scale, scale * 2);
-            sp.draw(ctx, 1, 1);
+            sp.draw(ctx, sp.w / -2, sp.h / -2);
+            ctx.restore();
         }
-        ctx.restore();
     }
 
     public start() {

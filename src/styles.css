@@ -4,13 +4,11 @@ html, body {
 }
 
 body {
-    background: #20142c;
+    background: repeating-conic-gradient(from 45deg, #e6e6e6 0% 25%, #cfcfd9 0% 50%) 0 0 / 64px 64px;
     color: #eaeaea;
     font-family: Inter, system-ui, Arial, sans-serif;
     overflow: hidden;
 }
-
-/* font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; */
 
 #dotty-wrap {
     position: relative;
